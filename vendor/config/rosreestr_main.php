@@ -9,6 +9,7 @@
         // table fields values
         private $firstname;
         private $lastname;
+        private $user_id;
         private $mail;
         private $password;
         private $created;
@@ -17,12 +18,18 @@
         private $workspace_id;
 
         //get connection
-
         public function getConnection($db){
             $this->conn = $db;
         }
 
 
+        //make query get user data by login
+        public function getUserByPasswordAndLogin($password, $login){
+            $query = "SELECT * FROM".$this->table_name."WHERE login=".$login;
+            $prepareQuery = $this->conn->prepare($query);
+            $prepareQuery->execute();
+            return $prepareQuery;
+        }
 
     }
 ?>
