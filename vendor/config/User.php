@@ -118,7 +118,7 @@
         //registrate user
         public function registrateUser(){
 
-            $query = "INSERT INTO `". $this->table_name."` (`firstname`, `lastname`, `mail`, `password`, `created`, `updated`, `login`, `workspaces_id`, `user_id`) VALUES ('ncfd', 'ncfd', 'ncfd', 'ncfd', 'ncfd', '2131', 'rewrw', 'rwrwerw', 'rewrwrw');";
+            $query = "INSERT INTO `". $this->table_name."` (`firstname`, `lastname`, `mail`, `password`, `created`, `updated`, `login`, `workspaces_id`, `user_id`) VALUES ('".$this->firstname."', '".$this->lastname."', '".$this->mail."', '".$this->password."', '".$this->created."', '".$this->updated."', '".$this->login."', '".$this->workspace_id."', '".$this->user_id."');";
 
             $stmt = $this->conn->prepare($query);
 
