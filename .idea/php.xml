@@ -4,7 +4,6 @@
     <include_path>
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/api/user" />
-      <path value="$PROJECT_DIR$/vendor/api/workspace" />
       <path value="$PROJECT_DIR$/vendor/api/container" />
     </include_path>
   </component>
