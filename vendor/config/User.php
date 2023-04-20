@@ -5,6 +5,8 @@
         private $conn;
         private $table_name = "rosreestr_main";
 
+        private $workspace_table_name = "rosreestr_workspaces";
+        private $contain_table_name = "rosreestr_contain";
 
         // table fields values
         private $firstname;
@@ -118,7 +120,7 @@
         //registrate user
         public function registrateUser(){
 
-            $query = "INSERT INTO `". $this->table_name."` (`firstname`, `lastname`, `mail`, `password`, `created`, `updated`, `login`, `workspaces_id`, `user_id`) VALUES ('ncfd', 'ncfd', 'ncfd', 'ncfd', 'ncfd', '2131', 'rewrw', 'rwrwerw', 'rewrwrw');";
+            $query = "INSERT INTO `". $this->table_name."` (`firstname`, `lastname`, `mail`, `password`, `created`, `updated`, `login`, `workspaces_id`, `user_id`) VALUES ('".$this->firstname."', '".$this->lastname."', '".$this->mail."', '".$this->password."', '".$this->created."', '".$this->updated."', '".$this->login."', '".$this->workspace_id."', '".$this->user_id."');";
 
             $stmt = $this->conn->prepare($query);
 
@@ -205,6 +207,32 @@
             }
         }
 
+        public function getWorkspaceByUserId($login, $password, $user_id){
+            $query = "SELECT * FROM `".$this->table_name."` WHERE login='".$login."' AND password='".$password."';";
+            $stmt = $this->conn->prepare($query);
+
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+            if($row){
+               $query = "SELECT * FROM '".$this->workspace_table_name."' WHERE `user_id`='".$user_id."'";
+               $stmt = $this->conn->prepare($query);
+               if($stmt->execute()){
+                   $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                   http_response_code(200);
+                   echo json_encode(array("message"=>$row));
+               }
+               else{
+                   http_response_code(400);
+                   echo json_encode(array("message"=>"Ошибка авторизации"));
+               }
+            }
+            else{
+                http_response_code(400);
+                echo json_encode(array("message"=>"Ошибка авторизации"));
+            }
+        }
 
 
 
