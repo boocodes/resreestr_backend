@@ -7,8 +7,7 @@
         public $conn;
 
         // get db connection
-        public function getConnection($db){
-            $this->conn = null;
+        public function setConnection(){
             try{
                 $this->conn = new PDO("mysql:host=". $this->host. ";dbname=". $this->db_name, $this->username, $this->password);
                 $this->conn->exec("set names utf8");
