@@ -141,9 +141,11 @@
 
 
             if($row){
+                http_response_code(200);
                 echo json_encode(array("message"=>$row));
             }
             else{
+                http_response_code(400);
                 echo json_encode(array("message"=>"Пользователь не найден"));
             }
         }
@@ -189,8 +191,8 @@
                 return false;
             }
         }
-        public function updatePassword($password, $login, $password){
-            $query = "UPDATE `".$this->table_name."` SET `password`='".$password."' WHERE `login`='".$login."' AND `password`='".$password."';";
+        public function updatePassword($passwordNew, $login, $password){
+            $query = "UPDATE `".$this->table_name."` SET `password`='".$passwordNew."' WHERE `login`='".$login."' AND `password`='".$password."';";
 
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
