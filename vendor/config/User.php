@@ -351,33 +351,18 @@
             }
         }
 
-        public function getWorkspaceByUserId($login, $password, $user_id){
-            $query = "SELECT * FROM `".$this->table_name."` WHERE login='".$login."' AND password='".$password."';";
+        public function get_user_permission_by_id(){
+            $query = "SELECT * FROM `$this->table_name` WHERE `user_id`='".$this->user_id."' AND `password`='$this->password'; ";
             $stmt = $this->conn->prepare($query);
-
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
             if($row){
-               $query = "SELECT * FROM '".$this->workspace_table_name."' WHERE `user_id`='".$user_id."'";
-               $stmt = $this->conn->prepare($query);
-               if($stmt->execute()){
-                   $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                   http_response_code(200);
-                   echo json_encode(array("message"=>$row));
-               }
-               else{
-                   http_response_code(400);
-                   echo json_encode(array("message"=>"Ошибка авторизации"));
-               }
+                return true;
             }
             else{
-                http_response_code(400);
-                echo json_encode(array("message"=>"Ошибка авторизации"));
+                return false;
             }
         }
-
 
 
 

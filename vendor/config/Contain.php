@@ -78,6 +78,42 @@
             }
         }
 
+        public function get_contain_by_user_id(){
+            $query = "SELECT * FROM `rosreestr_contain` WHERE `user_id`='$this->user_id';";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+
+            $contain_count = $stmt->rowCount();
+
+            if($contain_count>0){
+                $contains_arr = array();
+                $contains_arr["records"] = array();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    extract($row);
+                    $contain_item = array(
+                        "title"=>$title,
+                        "contain_link"=>$contain_link,
+                        "private"=>$private,
+                        "user_id"=>$user_id,
+                        "edited"=>$edited,
+                        "created"=>$created,
+                        "contain_id"=>$contain_id,
+                        "description"=>$description,
+                    );
+                    array_push($contains_arr["records"], $contain_item);
+                }
+                http_response_code(200);
+                echo json_encode(array("message"=>$contains_arr));
+                return true;
+            }
+            else{
+                http_response_code(400);
+                echo json_encode(array("message"=>"Ошибка, контейнер не найден"));
+                return false;
+            }
+
+        }
+
         public function editContain(){}
 
         public function deleteContain(){}
