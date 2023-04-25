@@ -15,19 +15,13 @@
 
     $data = json_decode(file_get_contents('php://input'), true);
 
-
-    $user->setUserFields(
-        $data["firstname"],
-        $data["lastname"],
-        $data["user_id"],
-        $data["mail"],
-        $data["password"],
-        $data["created"],
-        $data["updated"],
-        $data["login"],
-        $data["workspace_id"]
-    );
-
+    
+    $user->setFirstname($data["firstname"]);
+    $user->setLastname($data["lastname"]);
+    $user->setMail($data["mail"]);
+    $user->setPassword($data["password"]);
+    $user->setLogin($data["login"]);
+    
     if($user->checkFieldByEmptyParametr() && !empty($user->getConnection())){
         http_response_code(200);
         $user->registrateUser();
