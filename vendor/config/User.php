@@ -124,22 +124,13 @@
 
 
         // set fields
-        public function setUserFields($firstname, $lastname, $user_id, $mail, $password, $created, $updated, $login, $workspace_id, $organisation, $location, $about, $url_link_social, $avatar_src, $achievements){
+        public function setUserFields($firstname, $lastname, $user_id, $mail, $password,  $login){
             $this->firstname = $firstname;
             $this->lastname = $lastname;
             $this->user_id = $user_id;
             $this->mail = $mail;
             $this->password = $password;
-            $this->created = $created;
-            $this->updated = $updated;
             $this->login = $login;
-            $this->workspace_id = $workspace_id;
-            $this->organisation = $organisation;
-            $this->location = $location;
-            $this->about = $about;
-            $this->url_link_social = $url_link_social;
-            $this->avatar_src = $avatar_src;
-            $this->achievements = $achievements;
             return true;
         }
 
@@ -147,19 +138,9 @@
         public function checkFieldByEmptyParametr(){
             if(!empty($this->getFirstname()) &&
                 !empty($this->getLastname()) &&
-                !empty($this->getUser_id()) &&
                 !empty($this->getMail()) &&
                 !empty($this->getPassword()) &&
-                !empty($this->getCreated()) &&
-                !empty($this->getUpdated()) &&
-                !empty($this->getLogin()) &&
-                !empty($this->getWorkspace_id()) &&
-                !empty($this->getOrganisation()) &&
-                !empty($this->getLocation()) &&
-                !empty($this->getAbout()) &&
-                !empty($this->getUrlLinkSocial()) &&
-                !empty($this->getAvatarSrc()) &&
-                !empty($this->getAchievements())
+                !empty($this->getLogin())
             ){
                 return true;
             }
@@ -173,9 +154,7 @@
 
         //registrate user
         public function registrateUser(){
-
-            $query = "INSERT INTO `". $this->table_name."` (`firstname`, `lastname`, `mail`, `password`, `created`, `updated`, `login`, `workspaces_id`, `user_id`) VALUES ('".$this->firstname."', '".$this->lastname."', '".$this->mail."', '".$this->password."', '".$this->created."', '".$this->updated."', '".$this->login."', '".$this->workspace_id."', '".$this->user_id."');";
-
+            $query = "INSERT INTO `".$this->table_name."` (`firstname`, `lastname`, `mail`, `password`, `login`, `organisation`, `location`, `about`, `url_link_social`, `avatar_src`, `achievements`, `modified`, `created`, `user_id`) VALUES ('".$this->firstname."', '".$this->lastname."', '".$this->mail."', '".$this->password."', '".$this->login."', '', '', '', '', '', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);";
             $stmt = $this->conn->prepare($query);
 
             if($stmt->execute()){
