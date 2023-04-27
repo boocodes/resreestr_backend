@@ -16,12 +16,22 @@
 
     $data = json_decode(file_get_contents('php://input'), true);
 
-    $contain->setContain_title($data["contain_title"]);
-    $contain->setContain_description($data["contain_description"]);
-    $contain->setContain_private($data["contain_private"]);
-    $contain->setUser_id($data["user_id"]);
+    $contain->set_contain_title($data["contain_title"]);
+    $contain->set_contain_description($data["contain_description"]);
+    $contain->set_contain_private($data["contain_private"]);
+    $contain->set_user_id($data["user_id"]);
 
-//    echo json_encode(array("message"=>$data));
-    $contain->createContain();
-
+    $result = $contain->create_contain();
+    if($result){
+        http_response_code(200);
+        echo json_encode(array("message"=>"Контейнер успешно создан"));
+    }
+    else{
+        http_response_code(400);
+        echo json_encode(array("message"=>"Ошибка при создании контейнера"));
+    }
+    
+    
+    
+    return 0;
 ?>

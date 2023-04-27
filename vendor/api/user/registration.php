@@ -24,12 +24,19 @@
     
     if($user->checkFieldByEmptyParametr() && !empty($user->getConnection())){
         http_response_code(200);
-        $user->registrateUser();
-        echo json_encode(array("message"=>"Пользователь успешно создан"));
+        $result = $user->registrateUser();
+        if($result){
+            echo json_encode(array("message"=>"Пользователь успешно создан"));
+        }
+        else{
+            http_response_code(400);
+            echo json_encode(array("message"=>"Ошибка при создании пользователя"));
+        }
+
     }
     else{
         http_response_code(400);
-        echo json_encode(array("message"=>"Ошибка при создании пользователя"));
+        echo json_encode(array("message"=>"Ошибка, пустые данные"));
     }
 
 ?>

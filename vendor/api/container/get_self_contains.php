@@ -19,23 +19,34 @@
 
 
     // put user id in contain field
-    $contain->setUser_id($data["user_id"]);
+    $contain->set_user_id($data["user_id"]);
 
     // check if user have permission to get contain
     $user = new User();
     $user->setConnection($dbConnection);
-    $user->setUser_id($data["user_id"]);
-    $user->setPassword($data["user_password"]);
+    $user->set_user_id($data["user_id"]);
+    $user->set_password($data["user_password"]);
     
-    
-    if($user->get_user_permission_by_id()){
-        $contain->get_contain_by_user_id();
+
+    if($user->get_user_by_id_and_password()){
+        $result = $contain->get_contains_by_user_id();
+        if($result){
+            http_response_code(200);
+            echo json_encode(array("message"=>$result));
+        }
+        else{
+            http_response_code(400);
+            echo json_encode(array("message"=>"Error, containers not found"));
+            return false;
+        }
     }
     else{
         http_response_code(400);
-        echo json_encode(array("message"=>"Ошибка авторизации"));
+        echo json_encode(array("message"=>"Authorization error"));
         return false;
     }
+
+
 
 
 

@@ -15,8 +15,17 @@
 
     $data = json_decode(file_get_contents("php://input"), true);
 
-    $user->updateFirstname("bebrina", "dens", "1234");
+    $result = $user->updateFirstname("bebrina", "dens", "1234");
 
-
+    if($result){
+        http_response_code(200);
+        echo json_encode(array("message"=>$result));
+        return true;
+    }
+    else{
+        http_response_code(400);
+        echo json_encode(array("message"=>"Ошибка!"));
+        return false;
+    }
 
 ?>
