@@ -15,11 +15,13 @@
     $data = json_decode(file_get_contents('php://input'), true);
 
 
-    echo json_encode( $_FILES);
-
+    echo json_encode($_FILES);
+    echo json_encode($data);
 
     if(move_uploaded_file($_FILES["filename"]["tmp_name"], "../../images/".$_FILES["filename"]["name"])){
-        echo json_encode(array("message"=>"File successfully get"));
+//        echo json_encode(array("message"=>"File successfully get"));
+
+
     }
     else{
         echo json_encode(array("message"=>"Error"));
