@@ -16,9 +16,21 @@
 
     $data = json_decode(file_get_contents('php://input'), true);
 
+    $user->set_login($data["login"]);
+    $user->set_password($data["password"]);
+    $result = $user->get_user_by_login_and_password();
 
-    $user->getUserByLoginAndPassword($data["login"],$data["password"]);
-
+    
+    if($result){
+        http_response_code(200);
+        echo json_encode(array("message"=>$result));
+        return true;
+    }
+    else{
+        http_response_code(400);
+        echo json_encode(array("message"=>"Error, user not found"));
+        return false;
+    }
 
 ?>
 

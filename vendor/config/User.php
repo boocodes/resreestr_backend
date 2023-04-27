@@ -32,99 +32,99 @@
         public function getConnection(){
             return $this->conn;
         }
-        public function getFirstname(){
+        public function get_firstname(){
             return $this->firstname;
         }
-        public function getLastname(){
+        public function get_lastname(){
             return $this->lastname;
         }
-        public function getUser_id(){
+        public function get_user_id(){
             return $this->user_id;
         }
-        public function getMail(){
+        public function get_mail(){
             return $this->mail;
         }
-        public function getPassword(){
+        public function get_password(){
             return $this->password;
         }
-        public function getCreated(){
+        public function get_created(){
             return $this->created;
         }
-        public function getUpdated(){
+        public function get_updated(){
             return $this->updated;
         }
-        public function getLogin(){
+        public function get_login(){
             return $this->login;
         }
-        public function getWorkspace_id(){
+        public function get_workspace_id(){
             return $this->workspace_id;
         }
-        public function getOrganisation(){
+        public function get_organisation(){
             return $this->organisation;
         }
-        public function getLocation(){
+        public function get_location(){
             return $this->location;
         }
-        public function getAbout(){
+        public function get_about(){
             return $this->about;
         }
-        public function getUrlLinkSocial(){
+        public function get_url_link_social(){
             return $this->url_link_social;
         }
-        public function getAvatarSrc(){
+        public function get_avatar_src(){
             return $this->avatar_src;
         }
-        public function getAchievements(){
+        public function get_achievements(){
             return $this->achievements;
         }
 
         //setters
-        public function setWorkspace_id($workspace_id){
+        public function set_workspace_id($workspace_id){
             $this->workspace_id = $workspace_id;
         }
-        public function setFirstname($firstname){
+        public function set_firstname($firstname){
             $this->firstname = $firstname;
         }
-        public function setLastname($lastname){
+        public function set_lastname($lastname){
             $this->lastname = $lastname;
         }
-        public function setUser_id($user_id){
+        public function set_user_id($user_id){
             $this->user_id = $user_id;
         }
-        public function setMail($mail){
+        public function set_mail($mail){
             $this->mail = $mail;
         }
-        public function setPassword($password){
+        public function set_password($password){
             $this->password = $password;
         }
-        public function setUpdated($updated){
+        public function set_updated($updated){
             $this->updated = $updated;
         }
-        public function setLogin($login){
+        public function set_login($login){
             $this->login = $login;
         }
-        public function setOrganisation($organisation){
+        public function set_organisation($organisation){
             $this->organisation = $organisation;
         }
-        public function setLocation($location){
+        public function set_location($location){
             $this->location = $location;
         }
-        public function setAbout($about){
+        public function set_about($about){
             $this->about = $about;
         }
-        public function setUrlLinkSocial($url_link_social){
+        public function set_url_link_social($url_link_social){
             $this->url_link_social = $url_link_social;
         }
-        public function setAvatarSrc($avatar_src){
+        public function set_avatar_src($avatar_src){
             $this->avatar_src = $avatar_src;
         }
-        public function setAchievements($achievements){
+        public function set_achievements($achievements){
             $this->achievements = $achievements;
         }
 
 
         // set fields
-        public function setUserFields($firstname, $lastname, $user_id, $mail, $password,  $login){
+        public function set_user_fields($firstname, $lastname, $user_id, $mail, $password,  $login){
             $this->firstname = $firstname;
             $this->lastname = $lastname;
             $this->user_id = $user_id;
@@ -135,12 +135,12 @@
         }
 
         // check a fields by empty
-        public function checkFieldByEmptyParametr(){
-            if(!empty($this->getFirstname()) &&
-                !empty($this->getLastname()) &&
-                !empty($this->getMail()) &&
-                !empty($this->getPassword()) &&
-                !empty($this->getLogin())
+        public function check_field_by_empty_parametr(){
+            if(!empty($this->get_firstname()) &&
+                !empty($this->get_lastname()) &&
+                !empty($this->get_mail()) &&
+                !empty($this->get_password()) &&
+                !empty($this->get_login())
             ){
                 return true;
             }
@@ -153,7 +153,7 @@
 
 
         //registrate user
-        public function registrateUser(){
+        public function registrate_user(){
             $query = "INSERT INTO `".$this->table_name."` (`firstname`, `lastname`, `mail`, `password`, `login`, `organisation`, `location`, `about`, `url_link_social`, `avatar_src`, `achievements`, `modified`, `created`, `user_id`) VALUES ('".$this->firstname."', '".$this->lastname."', '".$this->mail."', '".$this->password."', '".$this->login."', '', '', '', '', '', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);";
             $stmt = $this->conn->prepare($query);
 
@@ -167,25 +167,21 @@
 
 
         // get user by login and password
-        public function getUserByLoginAndPassword($login, $password){
-            $query = "SELECT * FROM `rosreestr_main` WHERE login='".$login."' AND password='".$password."';";
+        public function get_user_by_login_and_password(){
+            $query = "SELECT * FROM `rosreestr_main` WHERE login='".$this->login."' AND password='".$this->password."';";
             $stmt = $this->conn->prepare($query);
-
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
             if($row){
-                http_response_code(200);
-                echo json_encode(array("message"=>$row));
+                return $row;
             }
             else{
-                http_response_code(400);
-                echo json_encode(array("message"=>"Пользователь не найден"));
+                return false;
             }
         }
 
-        public function getPublicUserDataByLogin($login){
+        public function get_public_user_data_by_login($login){
             $query = "SELECT * FROM `rosreestr_main` WHERE login='".$login."';";
             $stmt = $this->conn->prepare($query);
 
@@ -194,98 +190,74 @@
 
 
             if($row){
-                http_response_code(200);
-                echo json_encode(array("message"=>$row));
+                return $row;
             }
             else{
-                http_response_code(400);
-                echo json_encode(array("message"=>"Пользователь не найден"));
+                return false;
             }
         }
 
         // update user data methods
-        public function updateFirstname($firstname, $login, $password){
+        public function update_firstname($firstname, $login, $password){
             $query = "UPDATE `".$this->table_name."` SET `firstname`='".$firstname."' WHERE `login`='".$login."' AND `password`='".$password."';";
 
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
-                http_response_code(200);
-                echo json_encode(array("message"=>$query));
-                return true;
+                return $query;
             }
             else{
-                http_response_code(400);
-                echo json_encode(array("message"=>$query));
                 return false;
             }
 
         }
-        public function updateLastname($lastname, $login, $password){
+        public function update_lastname($lastname, $login, $password){
             $query = "UPDATE `".$this->table_name."` SET `lastname`='".$lastname."' WHERE `login`='".$login."' AND `password`='".$password."';";
 
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
-                http_response_code(200);
-                echo json_encode(array("message"=>$query));
-                return true;
+                return $query;
             }
             else{
-                http_response_code(400);
-                echo json_encode(array("message"=>$query));
                 return false;
             }
         }
-        public function updateMail($mail, $login, $password){
+        public function update_mail($mail, $login, $password){
             $query = "UPDATE `".$this->table_name."` SET `mail`='".$mail."' WHERE `login`='".$login."' AND `password`='".$password."';";
 
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
-                http_response_code(200);
-                echo json_encode(array("message"=>$query));
-                return true;
+                return $query;
             }
             else{
-                http_response_code(400);
-                echo json_encode(array("message"=>$query));
                 return false;
             }
         }
-        public function updatePassword($passwordNew, $login, $password){
+        public function update_password($passwordNew, $login, $password){
             $query = "UPDATE `".$this->table_name."` SET `password`='".$passwordNew."' WHERE `login`='".$login."' AND `password`='".$password."';";
 
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
-                http_response_code(200);
-                echo json_encode(array("message"=>$query));
-                return true;
+                return $query;
             }
             else{
-                http_response_code(400);
-                echo json_encode(array("message"=>$query));
                 return false;
             }
         }
-        public function updateAbout($password, $login, $about_new){
+        public function update_about($password, $login, $about_new){
             $query = "UPDATE `".$this->table_name."` SET `about`='".$about_new."' WHERE `login`='".$login."' AND `password`='".$this->password."';";
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
-                http_response_code(200);
-                echo json_encode(array("message"=>$query));
-                return true;
+                return $query;
             }
             else{
-                http_response_code(400);
-                echo json_encode(array("message"=>$query));
                 return false;
             }
         }
-        public function updateLocation($password, $login, $location_new){
+        public function update_location($password, $login, $location_new){
             $query = "UPDATE `".$this->table_name." SET `location`='".$location_new."' WHERE `login`='".$login."' AND `password`='".$password."';";
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
-                http_response_code(200);
-                echo json_encode(array("message"=>$query));
-                return true;
+                return $query;
             }
             else{
                 http_response_code(400);
@@ -293,68 +265,53 @@
                 return false;
             }
         }
-        public function updateOrganisation($password, $login, $organisation_new){
+        public function update_organisation($password, $login, $organisation_new){
             $query = "UPDATE `".$this->table_name." SET `organisation`='".$organisation_new."' WHERE `login`='".$login."' AND `password`='".$password."';";
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
-                http_response_code(200);
-                echo json_encode(array("message"=>$query));
-                return true;
+                return $query;
             }
             else{
-                http_response_code(400);
-                echo json_encode(array("message"=>$query));
                 return false;
             }
         }
-        public function updateAvatarSrc($password, $login, $avatar_src_new){
+        public function update_avatar_src($password, $login, $avatar_src_new){
             $query = "UPDATE `".$this->table_name." SET `avatar_src`='".$avatar_src_new."' WHERE `login`='".$login."' AND `password`='".$password."';";
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
-                http_response_code(200);
-                echo json_encode(array("message"=>$query));
-                return true;
+                return $query;
             }
             else{
-                http_response_code(400);
-                echo json_encode(array("message"=>$query));
                 return false;
             }
         }
-        public function updateAchievements($password, $login, $achievements_new){
+        public function update_achievements($password, $login, $achievements_new){
             $query = "UPDATE `".$this->table_name." SET `achievements`='".$achievements_new."' WHERE `login`='".$login."' AND `password`='".$password."';";
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
-                http_response_code(200);
-                echo json_encode(array("message"=>$query));
-                return true;
+                return $query;
             }
             else{
-                http_response_code(400);
-                echo json_encode(array("message"=>$query));
                 return false;
             }
         }
 
-        public function updateUrlLinkSocial($password, $login, $url_link_social_new){
+        public function update_url_link_social($password, $login, $url_link_social_new){
             $query = "UPDATE `".$this->table_name." SET `location`='".$url_link_social_new."' WHERE `login`='".$login."' AND `password`='".$password."';";
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
-                http_response_code(200);
-                echo json_encode(array("message"=>$query));
-                return true;
+                return $query;
             }
             else{
-                http_response_code(400);
-                echo json_encode(array("message"=>$query));
                 return false;
             }
         }
 
-        public function get_user_permission_by_id(){
-            $query = "SELECT * FROM `$this->table_name` WHERE `user_id`='".$this->user_id."' AND `password`='$this->password'; ";
+        public function get_user_by_id_and_password(){
+            $query = "SELECT * FROM ".$this->table_name." WHERE `user_id`='".$this->user_id."' AND `password`='$this->password'; ";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
+            echo json_encode(array("message"=>$query));
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if($row){
                 return true;
@@ -363,7 +320,19 @@
                 return false;
             }
         }
+        public function get_user_id_by_login(){
+            $query = "SELECT `user_id` FROM `".$this->table_name."` WHERE `login`='".$this->login."'; ";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($row){
+                return $row["user_id"];
+            }
+            else{
+                return false;
+            }
 
+        }
 
 
     }
