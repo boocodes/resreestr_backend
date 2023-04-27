@@ -10,6 +10,9 @@
         private $contain_private;
         private $contain_white_list;
         private $user_id;
+        private $contain_author_login;
+        private $branches_count;
+        private $default_branch;
 
         //get connection
         public function setConnection($db){
@@ -21,12 +24,22 @@
             return $this->conn;
         }
 
-        public function getContain_while_list(){
+        public function get_contain_while_list(){
             return $this->contain_white_list;
+        }
+        public function get_contain_author_login(){
+            return $this->contain_author_login;
         }
         public function get_contain_link(){
             return $this->contain_link;
         }
+        public function get_branches_count(){
+            return $this->branches_count;
+        }
+        public function get_default_branch(){
+            return $this->default_branch;
+        }
+
         public function get_contain_title(){
             return $this->contain_title;
         }
@@ -59,6 +72,15 @@
         public function set_user_id($user_id){
             $this->user_id = $user_id;
         }
+        public function set_branches_count($branches_count){
+            $this->branches_count = $branches_count;
+        }
+        public function set_default_branch($default_branch){
+            $this->default_branch;
+        }
+        public function set_contain_author_login($contain_author_login){
+            $this->contain_author_login = $contain_author_login;
+        }
         public function set_contain_private($contain_private){
             $this->contain_private = $contain_private;
         }
@@ -68,7 +90,7 @@
 
         //methods
         public function create_contain(){
-            $query = "INSERT INTO `rosreestr_contain` (`title`, `contain_link`, `private`, `user_id`, `edited`, `created`, `contain_id`, `description`, `white_user_id_list`) VALUES ('".$this->contain_title."', '".$this->contain_link."', '".$this->contain_private."', '".$this->user_id."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, '".$this->contain_description."', '".$this->contain_white_list."');";
+            $query = "INSERT INTO `rosreestr_contain` (`title`, `contain_link`, `private`, `user_id`, `edited`, `created`, `contain_id`, `description`, `white_user_id_list`, `contain_author_login`, `branches_count`, `default_branch`) VALUES ('".$this->contain_title."', '".$this->contain_link."', '".$this->contain_private."', '".$this->user_id."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, '".$this->contain_description."', '".$this->contain_white_list."', '".$this->contain_author_login."', '".$this->branches_count."', '".$this->default_branch."');";
 
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){

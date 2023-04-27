@@ -154,7 +154,7 @@
 
         //registrate user
         public function registrate_user(){
-            $query = "INSERT INTO `".$this->table_name."` (`firstname`, `lastname`, `mail`, `password`, `login`, `organisation`, `location`, `about`, `url_link_social`, `avatar_src`, `achievements`, `modified`, `created`, `user_id`) VALUES ('".$this->firstname."', '".$this->lastname."', '".$this->mail."', '".$this->password."', '".$this->login."', '', '', '', '', '', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);";
+            $query = "INSERT INTO `".$this->table_name."` (`firstname`, `lastname`, `mail`, `password`, `login`, `organisation`, `location`, `about`, `url_link_social`, `avatar_src`, `achievements`, `modified`, `created`, `user_id`) VALUES ('".$this->firstname."', '".$this->lastname."', '".$this->mail."', '".$this->password."', '".$this->login."', '', '', '', '', '".$this->avatar_src."', '', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);";
             $stmt = $this->conn->prepare($query);
 
             if($stmt->execute()){
@@ -311,7 +311,6 @@
             $query = "SELECT * FROM ".$this->table_name." WHERE `user_id`='".$this->user_id."' AND `password`='$this->password'; ";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
-            echo json_encode(array("message"=>$query));
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if($row){
                 return true;
@@ -331,6 +330,20 @@
             else{
                 return false;
             }
+        }
+
+        public function get_userdata_by_login(){
+            $query = "SELECT `firstname`, `lastname`, `mail`, `login`, `organisation`, `location`, `about`, `url_link_social`, `avatar_src`, `achievements` FROM `".$this->table_name."` WHERE `login`='".$this->login."';";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($row){
+                return $row;
+            }
+            else{
+                return false;
+            }
+
 
         }
 
