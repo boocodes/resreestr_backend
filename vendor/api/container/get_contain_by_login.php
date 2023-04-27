@@ -7,6 +7,10 @@
     include_once "../../config/database.php";
     include_once "../../config/Contain.php";
     include_once "../../config/User.php";
+    include_once "../../config/Environment.php";
+
+
+    $environment = new Environment();
 
     $database = new DataBase();
     $dbConnection = $database->setConnection();
@@ -28,7 +32,8 @@
     $contain_request_result =  $contain->get_contain_by_user_id_and_title($data["master_user_id"]);
 
     if($contain_request_result){
-        if($contain_request_result["private"]){
+
+        if($environment->getBooleanFromBooleanText($contain_request_result["private"])){
             if($contain_request_result["user_id"] == $data["master_user_id"]){
                 echo json_encode(array("message"=>$contain_request_result));
                 http_response_code(200);
