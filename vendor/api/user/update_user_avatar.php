@@ -1,7 +1,7 @@
 <?php
-    header("Access-Control-Allow-Origin: http://localhost:3000");
+    header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json; charset=UTF-8");
-    header("Access-Control-Allow-Methods: UPDATE, POST");
+    header("Access-Control-Allow-Methods: POST, UPDATE, PUT");
     header("Access-Control-Max-Age: 3600");
     header('Access-Control-Allow-Credentials', 'true');
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
@@ -20,8 +20,7 @@
     function get_login_from_authorization_header($string){
         $string_size = strlen($string);
         $white_space_pos = strripos($string, " ");
-        $needed_string_substr = $string_size - $white_space_pos - 2;
-        $result = mb_substr($string, 0, $needed_string_substr);
+        $result = mb_substr($string, 0, $white_space_pos);
         return $result;
     }
     function get_password_from_authorization_header($string){
@@ -31,6 +30,7 @@
         $result = mb_substr($string, $white_space_pos + 1, $string_size - $white_space_pos);
         return $result;
     }
+
 
     $authorization_header = getallheaders()["Authorization"];
     echo json_encode(get_password_from_authorization_header($authorization_header));

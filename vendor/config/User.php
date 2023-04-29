@@ -279,12 +279,25 @@
             $query = "UPDATE ".$this->table_name." SET `avatar_src`='".$avatar_src_new."' WHERE `login`='".$login."' AND `password`='".$password."';";
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
+                echo json_encode($query);
                 return $query;
             }
             else{
                 return false;
             }
         }
+
+        public function update_base_user_fields(){
+            $query = "UPDATE ".$this->table_name." SET `firstname`='".$this->firstname."', `mail`='".$this->mail."', `about`='".$this->about."', `url_link_social`='".$this->url_link_social."', `organisation`='".$this->organisation."', `location`='".$this->location."' WHERE `login`='".$this->login."' AND `password`='".$this->password."' ;";
+            $stmt = $this->conn->prepare($query);
+            if($stmt->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
         public function update_achievements($password, $login, $achievements_new){
             $query = "UPDATE `".$this->table_name." SET `achievements`='".$achievements_new."' WHERE `login`='".$login."' AND `password`='".$password."';";
             $stmt = $this->conn->prepare($query);
@@ -297,7 +310,7 @@
         }
 
         public function update_url_link_social($password, $login, $url_link_social_new){
-            $query = "UPDATE `".$this->table_name." SET `location`='".$url_link_social_new."' WHERE `login`='".$login."' AND `password`='".$password."';";
+            $query = "UPDATE ".$this->table_name." SET `location`='".$url_link_social_new."' WHERE `login`='".$login."' AND `password`='".$password."';";
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
                 return $query;
