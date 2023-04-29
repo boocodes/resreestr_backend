@@ -165,10 +165,24 @@
             }
         }
 
+        public function check_if_login_already_exist($login_search){
+            $query = "SELECT *  FROM `".$this->table_name."` WHERE `login`='".$login_search."';";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($row){
+                return true;
+            }
+            else{
+                return false;
+            }
+
+        }
+
 
         // get user by login and password
         public function get_user_by_login_and_password(){
-            $query = "SELECT * FROM `rosreestr_main` WHERE login='".$this->login."' AND password='".$this->password."';";
+            $query = "SELECT * FROM `".$this->table_name."` WHERE login='".$this->login."' AND password='".$this->password."';";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
