@@ -276,7 +276,7 @@
             }
         }
         public function update_avatar_src($password, $login, $avatar_src_new){
-            $query = "UPDATE `".$this->table_name." SET `avatar_src`='".$avatar_src_new."' WHERE `login`='".$login."' AND `password`='".$password."';";
+            $query = "UPDATE ".$this->table_name." SET `avatar_src`='".$avatar_src_new."' WHERE `login`='".$login."' AND `password`='".$password."';";
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
                 return $query;
