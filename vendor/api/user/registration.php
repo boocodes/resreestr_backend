@@ -23,22 +23,35 @@
     $user->set_login($data["login"]);
     $user->set_avatar_src("https://rosreestr/vendor/images/notExistAvatar.jpg");
 
+    
+    //check is login unique
+    
+    $result = $user->check_if_login_already_exist($data["login"]);
 
-    if($user->check_field_by_empty_parametr() && !empty($user->getConnection())){
-        http_response_code(200);
-        $result = $user->registrate_user();
-        if($result){
-            echo json_encode(array("message"=>"Пользователь успешно создан"));
+    if($result){
+        http_response_code(400);
+        echo json_encode(array("message"=>"Login already exist"));
+    }
+    else{
+        if($user->check_field_by_empty_parametr() && !empty($user->getConnection())){
+            http_response_code(200);
+            $result = $user->registrate_user();
+            if($result){
+                echo json_encode(array("message"=>"Пользователь успешно создан"));
+            }
+            else{
+                http_response_code(400);
+                echo json_encode(array("message"=>"Ошибка при создании пользователя"));
+            }
+
         }
         else{
             http_response_code(400);
-            echo json_encode(array("message"=>"Ошибка при создании пользователя"));
+            echo json_encode(array("message"=>"Ошибка, пустые данные"));
         }
+    }
+    
+    
 
-    }
-    else{
-        http_response_code(400);
-        echo json_encode(array("message"=>"Ошибка, пустые данные"));
-    }
 
 ?>
