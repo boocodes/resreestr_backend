@@ -122,6 +122,7 @@
                         "created"=>$created,
                         "contain_id"=>$contain_id,
                         "description"=>$description,
+                        "contain_author_login"=>$contain_author_login,
                     );
                     array_push($contains_arr["records"], $contain_item);
                 }
