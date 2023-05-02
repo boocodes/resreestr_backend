@@ -37,6 +37,7 @@
             http_response_code(200);
             $result = $user->registrate_user();
             if($result){
+                mkdir("../../contains_storage/".$data["login"], "0777");
                 echo json_encode(array("message"=>"Пользователь успешно создан"));
             }
             else{

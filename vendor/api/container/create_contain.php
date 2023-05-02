@@ -22,10 +22,11 @@
     $contain->set_user_id($data["user_id"]);
     $contain->set_contain_author_login($data["contain_author_login"]);
 
-    
+
     $result = $contain->create_contain();
     if($result){
         http_response_code(200);
+        mkdir("../../contains_storage/".$data["contain_author_login"]."/".$data["contain_title"], "0777");
         echo json_encode(array("message"=>"Контейнер успешно создан"));
     }
     else{
