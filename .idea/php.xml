@@ -7,6 +7,8 @@
       <path value="$PROJECT_DIR$/vendor/api/container" />
       <path value="$PROJECT_DIR$/vendor/api/workspace" />
       <path value="$PROJECT_DIR$/vendor/contains_storage/felker" />
+      <path value="$PROJECT_DIR$/vendor/api/headers" />
+      <path value="$PROJECT_DIR$/vendor/contains_storage/nick-felker" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />

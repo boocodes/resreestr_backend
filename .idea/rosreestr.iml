@@ -5,9 +5,11 @@
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/api/user" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/api/container" />
-      <excludeFolder url="file://$MODULE_DIR$/vendor/contains_storage/felker" />
+      <excludeFolder url="file://$MODULE_DIR$/api/container" />
+      <excludeFolder url="file://$MODULE_DIR$/api/user" />
+      <excludeFolder url="file://$MODULE_DIR$/api/headers" />
+      <excludeFolder url="file://$MODULE_DIR$/contains_storage/nick-felker" />
+      <excludeFolder url="file://$MODULE_DIR$/contains_storage/felker" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
