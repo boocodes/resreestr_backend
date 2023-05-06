@@ -37,7 +37,7 @@
         if(move_uploaded_file($_FILES["filename"]["tmp_name"], "../../images/".$_FILES["filename"]["name"])){
 
             echo json_encode(array("message"=>"File successfully get"));
-            if($user->update_avatar_src($password_from_authorization_header, $login_from_authorization_header, "https://rosreestr/vendor/images/".$_FILES["filename"]["name"])){
+            if($user->update_avatar_src($password_from_authorization_header, $login_from_authorization_header, "https://rosreestr/images/".$_FILES["filename"]["name"])){
                 http_response_code(200);
                 echo json_encode(array("message"=>"Successfully uploaded file"));
             }
