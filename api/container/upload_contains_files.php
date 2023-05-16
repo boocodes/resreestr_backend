@@ -6,5 +6,7 @@
     include_once "../../config/Environment.php";
 
     
-    echo json_encode($_FILES, true);
+////    echo json_encode($_FILES, true);
+////    echo json_encode($_GET, true);
+//    echo json_encode($_POST, true);
 ?>
