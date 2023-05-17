@@ -169,6 +169,16 @@
                 return false;
             }
         }
+        public function change_contain_visibility_flag($new_visibility_contain_flag){
+            $query = "UPDATE `".$this->table_name."` SET `private`='".$new_visibility_contain_flag."' WHERE `contain_author_login` = '".$this->contain_author_login."' AND `title` = '".$this->contain_title."'";
+            $stmt = $this->conn->prepare($query);
+            if($stmt->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
 
     }
 
