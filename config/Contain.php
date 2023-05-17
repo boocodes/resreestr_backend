@@ -159,7 +159,16 @@
             }
         }
 
-        public function delete_contain(){}
+        public function delete_contain(){
+            $query = "DELETE FROM `".$this->table_name."` WHERE `title` = '".$this->contain_title."' AND `contain_author_login` = '".$this->contain_author_login."'";
+            $stmt = $this->conn->prepare($query);
+            if($stmt->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
 
     }
 
