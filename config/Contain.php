@@ -148,7 +148,16 @@
 
         }
 
-        public function edit_contain(){}
+        public function rename_contain($new_contain_title){
+            $query = "UPDATE `".$this->table_name."` SET `title`='".$new_contain_title."' WHERE `contain_author_login`='".$this->contain_author_login."' AND `title`='".$this->contain_title."';";
+            $stmt = $this->conn->prepare($query);
+            if($stmt->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
 
         public function delete_contain(){}
 
