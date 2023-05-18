@@ -10,6 +10,7 @@
         private $contain_title;
         private $contain_description;
         private $contain_link;
+        private $contain_id;
         private $contain_private;
         private $contain_white_list;
         private $user_id;
@@ -39,6 +40,9 @@
         public function get_contain_link(){
             return $this->contain_link;
         }
+        public function get_contain_id(){
+            return $this->contain_id;
+        }
         public function get_branches_count(){
             return $this->branches_count;
         }
@@ -57,6 +61,9 @@
         }
 
         //setters
+        public function set_contain_id($contain_id){
+            $this->contain_id = $contain_id;
+        }
         public function set_contain_description($contain_description){
             $this->contain_description = $contain_description;
         }
@@ -239,6 +246,19 @@
         }
 
 
+        public function add_new_branch(){
+//            $query = "INSERT INTO `".$this->table_name."`(`contain_id`, `branch_link`, `id`, `branch_title`, `commits_links`, `branch_size`, `main_language`) VALUES ('".$this->contain_id."','','NULL','".$this->branch_title."','".$this->commits_links."','".$this->branch_size."','".$this->main_language."'); ";
+//            $stmt = $this->conn->prepare($query);
+//            if($stmt->execute()){
+//                return "Ветка успешно создана";
+//            }
+//            else{
+//                return false;
+//            }
+        }
+
+
+        public function get_contain_id_by_contain_title_and_user(){}
 
 
     }

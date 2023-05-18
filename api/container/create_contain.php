@@ -2,6 +2,7 @@
     include_once "../headers/post/index.php";
     include_once "../../config/database.php";
     include_once "../../config/Contain.php";
+    include_once "../../config/Contain_branch.php";
 
     $database = new DataBase();
     $dbConnection = $database->setConnection();
@@ -21,6 +22,11 @@
     $contain->set_branches_list(json_encode(array("init")));
 
 
+    $contain_branch = new Contain_branch();
+    $contain_branch->setConnection($dbConnection);
+
+
+
     $result = $contain->create_contain();
 
     if($result){
@@ -30,6 +36,7 @@
         mkdir("../../contains_storage/".$data["contain_author_login"]."/".$data["contain_title"]. "/" . $contain->get_default_branch() . "/Initial commit" ,"0777"); // make dir of first commit
         $contain->update_contain_size_value();
         $contain->update_contain_size_at_database();
+
         echo json_encode(array("message"=>"Контейнер успешно создан"));
     }
     else{
