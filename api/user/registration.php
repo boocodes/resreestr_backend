@@ -17,7 +17,7 @@
     $user->set_mail($data["mail"]);
     $user->set_password($data["password"]);
     $user->set_login($data["login"]);
-    $user->set_avatar_src("https://rosreestr/vendor/images/notExistAvatar.jpg");
+    $user->set_avatar_src("https://rosreestr/images/notExistAvatar.jpg");
 
     
     //check is login unique
