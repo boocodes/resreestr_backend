@@ -1,4 +1,7 @@
 <?php
+
+    include_once "Files.php";
+
     class Contain{
 
         private $conn;
@@ -12,6 +15,9 @@
         private $user_id;
         private $contain_author_login;
         private $branches_count;
+        private $contain_size = 0;
+        private $main_language = "";
+        private $branches_list;
         private $default_branch;
 
         //get connection
@@ -76,7 +82,7 @@
             $this->branches_count = $branches_count;
         }
         public function set_default_branch($default_branch){
-            $this->default_branch;
+            $this->default_branch = $default_branch;
         }
         public function set_contain_author_login($contain_author_login){
             $this->contain_author_login = $contain_author_login;
@@ -90,7 +96,7 @@
 
         //methods
         public function create_contain(){
-            $query = "INSERT INTO `rosreestr_contain` (`title`, `contain_link`, `private`, `user_id`, `edited`, `created`, `contain_id`, `description`, `white_user_id_list`, `contain_author_login`, `branches_count`, `default_branch`) VALUES ('".$this->contain_title."', '".$this->contain_link."', '".$this->contain_private."', '".$this->user_id."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, '".$this->contain_description."', '".$this->contain_white_list."', '".$this->contain_author_login."', '".$this->branches_count."', '".$this->default_branch."');";
+            $query = "INSERT INTO `rosreestr_contain` (`title`, `contain_link`, `private`, `user_id`, `edited`, `created`, `contain_id`, `description`, `white_user_id_list`, `contain_author_login`, `branches_count`, `default_branch`, `contain_size`, `main_language`, `branches_list`) VALUES ('".$this->contain_title."', '".$this->contain_link."', '".$this->contain_private."', '".$this->user_id."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, '".$this->contain_description."', '".$this->contain_white_list."', '".$this->contain_author_login."', '".$this->branches_count."', '".$this->default_branch."', '".$this->contain_size."', '".$this->main_language."', '".$this->branches_list."');";
 
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
@@ -134,7 +140,7 @@
             }
         }
 
-        public function get_contain_by_user_id_and_title($master_user_id){
+        public function get_contain_by_user_id_and_title(){
             $query = "SELECT * FROM `".$this->table_name."` WHERE `user_id`='".$this->user_id."' AND `title`='".$this->contain_title."'; ";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
@@ -145,8 +151,10 @@
             else{
                 return false;
             }
-
         }
+
+
+
 
         public function rename_contain($new_contain_title){
             $query = "UPDATE `".$this->table_name."` SET `title`='".$new_contain_title."' WHERE `contain_author_login`='".$this->contain_author_login."' AND `title`='".$this->contain_title."';";
@@ -179,6 +187,59 @@
                 return false;
             }
         }
+
+
+        public function set_contain_size_value($contain_size){
+            $this->contain_size = $contain_size;
+        }
+
+        public function update_contain_size_value(){
+            $file_workers = new Files();
+            $contain_size = $file_workers->getDirectorySize("../../contains_storage/".$this->contain_author_login."/" . $this->contain_title );
+            if($contain_size){
+                return $contain_size;
+            }
+            else{
+                return 0;
+            }
+        }
+
+        public function update_contain_size_at_database(){
+            $query = "UPDATE `".$this->table_name."` SET `contain_size`='".$this->contain_size."' WHERE `contain_author_login` = '".$this->contain_author_login."' AND `title` = '".$this->contain_title."'";
+            $stmt = $this->conn->prepare($query);
+            if($stmt->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        public function get_contain_size_value(){
+            return $this->contain_size;
+        }
+
+        public function set_branches_list($branches_list){
+            $this->branches_list = $branches_list;
+        }
+        public function get_branches_list(){
+            return $this->branches_list;
+        }
+        public function get_branches_list_from_database(){
+            $query = "SELECT * FROM `".$this->table_name."` WHERE `title`='".$this->contain_title."' AND `contain_author_login`='".$this->contain_author_login."';";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($row){
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
+
+
+
 
     }
 
