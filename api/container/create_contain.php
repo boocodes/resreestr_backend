@@ -36,7 +36,8 @@
         mkdir("../../contains_storage/".$data["contain_author_login"]."/".$data["contain_title"]. "/" . $contain->get_default_branch() . "/Initial commit" ,"0777"); // make dir of first commit
         $contain->update_contain_size_value();
         $contain->update_contain_size_at_database();
-
+        $contain_data = $contain->get_contain_id_by_contain_title_and_user($data["contain_title"], $data["contain_author_login"]);
+        $contain_branch->create_firts_init_branch($contain_data["contain_id"]);
         echo json_encode(array("message"=>"Контейнер успешно создан"));
     }
     else{

@@ -17,5 +17,6 @@
         "C#" => "#178600",
         "Pascal" => "#e3f171",
         "Haskel" => "#5e5086",
+        "empty" => "#333333" // no languages in the container
     )
 ?>

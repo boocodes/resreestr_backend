@@ -19,19 +19,10 @@
     $user->set_password($data["password"]);
 
     if($user->get_user_by_login_and_password()){
-        $result = $contain->get_branches_list_from_database();
-        if($result){
-            http_response_code(200);
-            echo json_encode(array("message"=>$result));
-        }
-        else{
-            http_response_code(400);
-            echo json_encode(array("message"=>"Ошибка в получении списка веток"));
-        }
+
     }
     else{
-        http_response_code(400);
-        echo json_encode(array("message"=>"Ошибка авторизации"));
+
     }
 
 

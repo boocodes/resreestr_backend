@@ -70,9 +70,6 @@
         public function set_contain($contain){
             $this->contain = $contain;
         }
-        public function set_contain_id($contain_id){
-            $this->contain_id = $contain_id;
-        }
         public function set_title($title){
             $this->title = $title;
         }
@@ -258,7 +255,18 @@
         }
 
 
-        public function get_contain_id_by_contain_title_and_user(){}
+        public function get_contain_id_by_contain_title_and_user($contain_title, $contain_author_login){
+            $query = "SELECT `contain_id` FROM `rosreestr_contain` WHERE `title` = '".$contain_title."' AND `contain_author_login` = '".$contain_author_login."';";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($row){
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
 
 
     }

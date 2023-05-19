@@ -79,10 +79,51 @@
                 return false;
             }
         }
+        public function create_firts_init_branch($contain_id){
+            $query = "INSERT INTO `rosreestr_contain_branch` (`contain_id`, `branch_link`, `id`, `branch_title`, `commits_links`, `branch_size`, `main_language`) VALUES ('".$contain_id."', 'net', NULL, 'init', 'net', '0', 'empty');";
+            $stmt = $this->conn->prepare($query);
+            if($stmt->execute()){
+                return "Ветка успешно создана";
+            }
+            else{
+                return false;
+            }
+        }
 
         public function editBranch(){}
 
         public function deleteBranch(){}
+
+        public function get_branches_by_contain_id(){
+            $query = "SELECT * FROM `".$this->table_name."` WHERE `contain_id`='".$this->contain_id."'; ";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+
+            $contain_count = $stmt->rowCount();
+
+            if($contain_count>0){
+                $branches_arr = array();
+                $branches_arr["records"] = array();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    extract($row);
+                    $branch_item = array(
+                        "contain_id"=>$contain_id,
+                        "branch_link"=>$branch_link,
+                        "id"=>$id,
+                        "branch_title"=>$branch_title,
+                        "commits_links"=>$commits_links,
+                        "branch_size"=>$branch_size,
+                        "main_language"=>$main_language,
+                    );
+                    array_push($branches_arr["records"], $branch_item);
+                }
+                http_response_code(200);
+                return $branches_arr["records"];
+            }
+            else{
+                return false;
+            }
+        }
 
     }
 
