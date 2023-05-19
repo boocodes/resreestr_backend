@@ -70,7 +70,7 @@
 
         // methods
         public function create_new_branch(){
-            $query = "INSERT INTO `".$this->table_name."`(`contain_id`, `branch_link`, `id`, `branch_title`, `commits_links`, `branch_size`, `main_language`) VALUES ('".$this->contain_id."','".$this->branch_link."','NULL','".$this->branch_title."','".$this->commits_links."','".$this->branch_size."','".$this->main_language."'); ";
+            $query = "INSERT INTO `".$this->table_name."`(`contain_id`, `branch_link`, `id`, `branch_title`, `commits_links`, `branch_size`, `main_language`) VALUES ('".$this->contain_id."','".$this->branch_link."',NULL,'".$this->branch_title."','".$this->commits_links."','".$this->branch_size."','".$this->main_language."'); ";
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
                 return "Ветка успешно создана";
@@ -119,6 +119,19 @@
                 }
                 http_response_code(200);
                 return $branches_arr["records"];
+            }
+            else{
+                return false;
+            }
+        }
+
+        public function get_branch_by_title_and_contain_id(){
+            $query = "SELECT * FROM `".$this->table_name."` WHERE `contain_id`='".$this->contain_id."' AND `branch_title` = '".$this->branch_title."'; ";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($row){
+                return $row;
             }
             else{
                 return false;
