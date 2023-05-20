@@ -50,10 +50,38 @@
 
         public function create_new_commit(){
             $query = "INSERT INTO `".$this->table_name."`(`title`, `id`, `branch_id`, `link`) VALUES ('".$this->title."', NULL ,'".$this->branch_id."','".$this->link."')";
-            echo json_encode($query);
+//            echo json_encode($query);
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
                 return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        public function get_commits_list_by_branch_id(){
+            $query = "SELECT * FROM `".$this->table_name."` WHERE `branch_id`='".$this->branch_id."'; ";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+
+            $commit_count = $stmt->rowCount();
+
+            if($commit_count>0){
+                $commits_arr = array();
+                $commits_arr["records"] = array();
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    extract($row);
+                    $commit_item = array(
+                        "title"=>$title,
+                        "id"=>$id,
+                        "branch_id"=>$branch_id,
+                        "link"=>$link,
+                    );
+                    array_push($commits_arr["records"], $commit_item);
+                }
+                http_response_code(200);
+                return $commits_arr["records"];
             }
             else{
                 return false;

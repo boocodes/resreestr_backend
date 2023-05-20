@@ -44,7 +44,7 @@
 
             mkdir("../../contains_storage/".$data["contain_author_login"]."/".$data["contain_title"], "0777"); // make dir of contain
             mkdir("../../contains_storage/".$data["contain_author_login"]."/".$data["contain_title"]. "/" . $contain->get_default_branch(), "0777"); // make dir of default branch
-            mkdir("../../contains_storage/".$data["contain_author_login"]."/".$data["contain_title"]. "/" . $contain->get_default_branch() . "/Initial commit" ,"0777"); // make dir of first commit
+            mkdir("../../contains_storage/".$data["contain_author_login"]."/".$data["contain_title"]. "/" . $contain->get_default_branch() . "/initial_commit" ,"0777"); // make dir of first commit
 
 
 
@@ -53,11 +53,14 @@
 
             $new_branch_data = $contain_branch->create_firts_init_branch($contain_id); // get value of creating first init empty contain`s branch
 
+            $branch_id = $contain_branch->get_branch_id_by_title_and_contain_id("init", $contain_id);
+
+            echo json_encode(array("branch_id"=>$branch_id));
 
 
             $commit = new Commit(); // create commit object
             // set commit`s objects fields
-            $commit->set_branch_id("4");
+            $commit->set_branch_id($branch_id);
             $commit->set_connection($dbConnection);
             $commit->set_title("initial_commit");
             $commit->set_link("net");

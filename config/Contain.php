@@ -266,6 +266,17 @@
             }
         }
 
+        public function change_default_contain_branch($contain_title, $contain_id, $new_default_branch, $old_default_branch){
+            $query = "UPDATE `rosreestr_contain` SET `default_branch`='".$new_default_branch."' WHERE `title`='".$contain_title."' AND `contain_id`='".$contain_id."' AND `default_branch`='".$old_default_branch."'";
+            $stmt = $this->conn->prepare($query);
+            if($stmt->execute()){
+                return "Комментарий по умолчанию успешно изменен";
+            }
+            else{
+                return false;
+            }
+        }
+
 
     }
 

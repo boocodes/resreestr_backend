@@ -148,8 +148,7 @@
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if($row){
-                echo json_encode($row);
-                return $row;
+                return $row["id"];
             }
             else{
                 return false;
