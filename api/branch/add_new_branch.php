@@ -35,12 +35,13 @@
         $contain_branch->setBranch_link("net");
         $contain_branch->setBranch_title($data["new_branch_title"]);
 
-
+        echo json_encode($data, true);
         //check if branch with this title already exist
         if(!$contain_branch->get_branch_by_title_and_contain_id()){
             $branch_creating_result = $contain_branch->create_new_branch();
             if($branch_creating_result){
                 mkdir("../../contains_storage/".$data["login"]."/".$data["contain_title"]. "/" . $data["new_branch_title"], "0777");
+
                 http_response_code(200);
                 echo json_encode(array("message"=>"Ветка успешно создана"));
             }
