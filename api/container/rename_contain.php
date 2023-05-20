@@ -25,6 +25,9 @@
         $contain->set_contain_author_login($data["login"]);
         $contain->set_contain_title($data["contain_title"]);
         if($contain->rename_contain($data["new_contain_title"])){
+
+            rename("../../contains_storage/". $data["login"] . "/" . $data["contain_title"], "../../contains_storage/" . $data["login"] . "/" . $data["new_contain_title"]);
+
             http_response_code(200);
             echo json_encode(array("message"=>"Конейнер успешно переименован"));
         }
