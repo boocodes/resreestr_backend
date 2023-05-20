@@ -83,6 +83,7 @@
             $query = "INSERT INTO `rosreestr_contain_branch` (`contain_id`, `branch_link`, `id`, `branch_title`, `commits_links`, `branch_size`, `main_language`) VALUES ('".$contain_id."', 'net', NULL, 'init', 'net', '0', 'empty');";
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
+
                 return "Ветка успешно создана";
             }
             else{
@@ -127,6 +128,7 @@
 
         public function get_branch_by_title_and_contain_id(){
             $query = "SELECT * FROM `".$this->table_name."` WHERE `contain_id`='".$this->contain_id."' AND `branch_title` = '".$this->branch_title."'; ";
+
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -138,6 +140,21 @@
             }
         }
 
+
+        public function get_branch_id_by_title_and_contain_id($branch_title, $contain_id){
+            $query = "SELECT * FROM `".$this->table_name."` WHERE `contain_id`='".$contain_id."' AND `branch_title`='".$branch_title."';";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($row){
+                echo json_encode($row);
+                return $row;
+            }
+            else{
+                return false;
+            }
+        }
     }
 
 ?>

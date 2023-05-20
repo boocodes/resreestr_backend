@@ -100,7 +100,6 @@
         //methods
         public function create_contain(){
             $query = "INSERT INTO `rosreestr_contain` (`title`, `contain_link`, `private`, `user_id`, `edited`, `created`, `contain_id`, `description`, `white_user_id_list`, `contain_author_login`, `branches_count`, `default_branch`, `contain_size`, `main_language`) VALUES ('".$this->contain_title."', '".$this->contain_link."', '".$this->contain_private."', '".$this->user_id."', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, '".$this->contain_description."', '".$this->contain_white_list."', '".$this->contain_author_login."', '".$this->branches_count."', '".$this->default_branch."', '".$this->contain_size."', '".$this->main_language."');";
-            echo json_encode($query);
             $stmt = $this->conn->prepare($query);
             if($stmt->execute()){
                 return "Контейнер успешно создан";
@@ -260,7 +259,7 @@
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if($row){
-                return $row;
+                return $row["contain_id"];
             }
             else{
                 return false;
